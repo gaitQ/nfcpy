@@ -190,16 +190,14 @@ class Chipset(pn532.Chipset):
         """Turn on buzzer and set LED to red only. The timeout here must exceed
          the total buzzer/flash duration defined in bytes 5-8. """
         duration_in_tenths_of_second = int(min(duration_in_ms / 100, 255))
-        timeout_in_seconds = (duration_in_tenths_of_second + 1) / 10.0
         data = "FF00400D04{:02X}000101".format(duration_in_tenths_of_second)
-        self.ccid_xfr_block(bytearray.fromhex(data),
-                            timeout=timeout_in_seconds)
+        self.ccid_xfr_block(bytearray.fromhex(data))
 
     def send_ack(self):
         # Send an ACK frame, usually to terminate most recent command.
         self.ccid_xfr_block(Chipset.ACK)
 
-    def ccid_xfr_block(self, data, timeout=0.1):
+    def ccid_xfr_block(self, data, timeout=5):
         """Encapsulate host command *data* into an PC/SC Escape command to
         send to the device and extract the chip response if received
         within *timeout* seconds.

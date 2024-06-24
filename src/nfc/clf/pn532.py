@@ -229,7 +229,7 @@ class Device(pn53x.Device):
             self.chipset.transport.baudrate = 115200
 
         # Set the chip to sleep mode with some wakeup sources.
-        self.chipset.power_down(wakeup_enable=("I2C", "SPI", "HSU"))
+        # self.chipset.power_down(wakeup_enable=("I2C", "SPI", "HSU"))
         super(Device, self).close()
 
     def sense_tta(self, target):
